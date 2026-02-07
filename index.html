@@ -23,7 +23,7 @@ function upload() {
   reader.onload = function () {
     const data = reader.result.split(",")[1];
 
-    fetch("YOUR_WEB_APP_URL", {
+    fetch("https://script.google.com/macros/s/AKfycby1do8z62-5ztnDDtqteA6-dVoV_ETCF-LeRipYvohWaHzfJ2r1OC9ivude1Zj4SyVMcA/exec", {
       method: "POST",
       body: new URLSearchParams({
         email: email,
