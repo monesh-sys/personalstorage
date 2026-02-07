@@ -1,23 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dashboard</title>
+  <title>Dashboard | Personal Storage</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Welcome to Personal Storage</h2>
+<h2>📁 Personal Storage Dashboard</h2>
 
-<input type="file"><br><br>
+<input type="file" id="fileInput"><br><br>
 
-<button onclick="alert('File uploaded (demo only)')">
-  Upload
-</button>
+<button onclick="uploadFile()">Upload</button>
 
-<p>
-  ⚠ This is a frontend demo.  
-  Backend required for real storage.
+<h3>Uploaded Files</h3>
+<ul id="fileList"></ul>
+
+<p style="font-size:14px; color:#94a3b8;">
+  ⚠ Files are temporary (frontend demo).
 </p>
+
+<script>
+function uploadFile() {
+  const input = document.getElementById("fileInput");
+  const file = input.files[0];
+
+  if (!file) {
+    alert("Please choose a file first");
+    return;
+  }
+
+  const list = document.getElementById("fileList");
+  const li = document.createElement("li");
+
+  const link = document.createElement("a");
+  link.textContent = file.name;
+  link.href = URL.createObjectURL(file);
+  link.target = "_blank";
+
+  li.appendChild(link);
+  list.appendChild(li);
+
+  input.value = "";
+}
+</script>
 
 </body>
 </html>
