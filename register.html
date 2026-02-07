@@ -1,39 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register</title>
+  <title>Register | Personal Storage</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h2>Register</h2>
 
-<form onsubmit="return registerUser()">
-  <input type="text" id="ruser" placeholder="Username" required><br>
-  <input type="password" id="rpass" placeholder="Password" required><br>
+<form onsubmit="return validateCaptcha()">
+  <input type="text" id="username" placeholder="Username" required><br>
+  <input type="password" id="password" placeholder="Password" required><br>
 
-  <p id="captcha"></p>
-  <input type="number" id="capInput" placeholder="Answer" required><br>
+  <div style="margin:15px;">
+    <span id="captchaBox"
+          style="font-size:20px;
+                 font-weight:bold;
+                 letter-spacing:3px;
+                 background:#1e293b;
+                 padding:10px;
+                 display:inline-block;">
+    </span>
+    <button type="button" onclick="generateCaptcha()">🔄</button>
+  </div>
+
+  <input type="text" id="captchaInput" placeholder="Enter CAPTCHA" required><br>
 
   <button type="submit">Register</button>
 </form>
 
-<script>
-let a = Math.floor(Math.random()*10);
-let b = Math.floor(Math.random()*10);
-document.getElementById("captcha").innerText =
-  "CAPTCHA: " + a + " + " + b;
+<p>
+  Already registered? <a href="index.html">Login</a>
+</p>
 
-function registerUser() {
-  let ans = document.getElementById("capInput").value;
-  if (parseInt(ans) !== a + b) {
-    alert("CAPTCHA wrong");
+<script>
+let captcha = "";
+
+function generateCaptcha() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+  captcha = "";
+  for (let i = 0; i < 6; i++) {
+    captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  document.getElementById("captchaBox").innerText = captcha;
+}
+
+function validateCaptcha() {
+  const input = document.getElementById("captchaInput").value;
+
+  if (input !== captcha) {
+    alert("❌ CAPTCHA incorrect. Try again.");
+    generateCaptcha();
     return false;
   }
-  alert("Registered successfully (demo)");
+
+  alert("✅ Registration successful (Demo version)");
   window.location.href = "index.html";
   return false;
 }
+
+generateCaptcha();
 </script>
 
 </body>
