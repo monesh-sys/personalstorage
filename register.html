@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Register</h2>
+
+<form onsubmit="return registerUser()">
+  <input type="text" id="ruser" placeholder="Username" required><br>
+  <input type="password" id="rpass" placeholder="Password" required><br>
+
+  <p id="captcha"></p>
+  <input type="number" id="capInput" placeholder="Answer" required><br>
+
+  <button type="submit">Register</button>
+</form>
+
+<script>
+let a = Math.floor(Math.random()*10);
+let b = Math.floor(Math.random()*10);
+document.getElementById("captcha").innerText =
+  "CAPTCHA: " + a + " + " + b;
+
+function registerUser() {
+  let ans = document.getElementById("capInput").value;
+  if (parseInt(ans) !== a + b) {
+    alert("CAPTCHA wrong");
+    return false;
+  }
+  alert("Registered successfully (demo)");
+  window.location.href = "index.html";
+  return false;
+}
+</script>
+
+</body>
+</html>
