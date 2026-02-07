@@ -2,14 +2,19 @@
 <html>
 <body>
 
-<h3>Permanent Google Storage (Email Based)</h3>
+<h3>📁 Permanent Google Storage</h3>
 
 <input type="email" id="email" placeholder="Enter email" required><br><br>
-<input type="file" id="file" required><br><br>
+<input type="file" id="file"><br><br>
 
 <button onclick="upload()">Upload</button>
 
+<h3>Uploaded Files</h3>
+<ul id="fileList"></ul>
+
 <script>
+const API_URL = "YOUR_WEB_APP_URL";
+
 function upload() {
   const email = document.getElementById("email").value;
   const file = document.getElementById("file").files[0];
@@ -23,7 +28,7 @@ function upload() {
   reader.onload = function () {
     const data = reader.result.split(",")[1];
 
-    fetch("https://script.google.com/macros/s/AKfycbzkW80JSkFW8JTY_i9lsFxgaEXZAZ2I-5rAFcOTeJA7lOXU2pUEC6MSvuQaRk8uUPX2/exec", {
+    fetch(API_URL, {
       method: "POST",
       body: new URLSearchParams({
         email: email,
@@ -31,12 +36,34 @@ function upload() {
         type: file.type,
         data: data
       })
-    })
-    .then(() => alert("Uploaded & shared successfully"));
+    }).then(() => {
+      alert("Uploaded");
+      loadFiles();
+    });
   };
-
   reader.readAsDataURL(file);
 }
+
+function loadFiles() {
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(files => {
+      const list = document.getElementById("fileList");
+      list.innerHTML = "";
+
+      files.forEach(file => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = file.url;
+        a.textContent = file.name;
+        a.target = "_blank";
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    });
+}
+
+loadFiles();
 </script>
 
 </body>
