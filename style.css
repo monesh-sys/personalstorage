@@ -1,0 +1,23 @@
+body {
+  background: #0f172a;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+  padding-top: 60px;
+}
+
+input, button {
+  padding: 10px;
+  margin: 5px;
+  width: 220px;
+}
+
+button {
+  background: #38bdf8;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: #38bdf8;
+}
